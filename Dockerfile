@@ -9,3 +9,4 @@ RUN mkdir -p uploads && chown -R node:node /app
 USER node
 EXPOSE 3000
 CMD ["sh","-c","node scripts/migrate.js && node src/server.js"]
+CMD ["sh","-c","node scripts/migrate.js && if [ \"$RUN_SEED\" = \"true\" ]; then node scripts/seed.js; fi && node src/server.js"]
