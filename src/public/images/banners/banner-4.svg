@@ -1,1 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900"><rect width="1920" height="900" fill="#e9e7dd"/><circle cx="1450" cy="420" r="350" fill="none" stroke="#151511" stroke-width="3" opacity=".25"/><circle cx="1450" cy="420" r="275" fill="none" stroke="#151511" stroke-width="2" opacity=".25"/><g transform="translate(1060 250) rotate(-8 300 150)" fill="none" stroke="#151511" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M0 95 Q10 30 75 38 L265 55 Q315 65 300 130 L275 230 Q260 275 205 265 L65 245 Q15 235 10 175Z"/><path d="M355 55 L550 38 Q610 30 620 95 L610 175 Q605 235 555 245 L415 265 Q360 275 345 230 L320 130 Q305 65 355 55Z"/><path d="M300 105 Q310 70 320 105"/><path d="M0 110 L-65 85 M620 110 L685 85"/></g><text x="115" y="170" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="9" fill="#151511">SUNPOP / THE NEW SUN EDITION</text><text x="105" y="540" font-family="Arial,sans-serif" font-size="112" font-weight="800" letter-spacing="-5" fill="#151511">EVERYDAY ICONS</text><text x="115" y="615" font-family="Arial,sans-serif" font-size="27" letter-spacing="3" fill="#151511">BOLD FRAMES. EVERYDAY CONFIDENCE.</text><text x="115" y="800" font-family="Arial,sans-serif" font-size="23" font-weight="700" letter-spacing="5" fill="#151511">SEE THE BOLD SIDE  ✳  EST. 2026</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" role="img" aria-label="SUNPOP sunglasses banner 4">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1ebdd"/><stop offset="1" stop-color="#e6dcc6"/></linearGradient><linearGradient id="lens" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#7b4fb8"/><stop offset="1" stop-color="#24123f"/></linearGradient><linearGradient id="shine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".75"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient><radialGradient id="glow"><stop offset="0" stop-color="#151511" stop-opacity=".55"/><stop offset="1" stop-color="#151511" stop-opacity="0"/></radialGradient><filter id="blur"><feGaussianBlur stdDeviation="22"/></filter></defs>
+<rect width="1920" height="900" fill="url(#bg)"/>
+<circle cx="1290" cy="430" r="560" fill="url(#glow)"/>
+<circle cx="1290" cy="430" r="420" fill="none" stroke="#ff633b" stroke-width="3" opacity="0.28"/>
+<circle cx="1290" cy="430" r="330" fill="none" stroke="#ff633b" stroke-width="3" opacity="0.22"/>
+<circle cx="1290" cy="430" r="240" fill="none" stroke="#ff633b" stroke-width="3" opacity="0.16"/>
+<line x1="1705" y1="651" x2="1749" y2="674" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1604" y1="779" x2="1655" y2="835" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1466" y1="866" x2="1504" y2="958" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1306" y1="900" x2="1308" y2="950" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1145" y1="877" x2="1122" y2="948" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1001" y1="800" x2="939" y2="879" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="891" y1="679" x2="849" y2="706" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="830" y1="528" x2="757" y2="543" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="825" y1="365" x2="726" y2="351" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="875" y1="209" x2="831" y2="186" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="976" y1="81" x2="925" y2="25" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1114" y1="-6" x2="1076" y2="-98" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1274" y1="-40" x2="1272" y2="-90" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1435" y1="-17" x2="1458" y2="-88" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1579" y1="60" x2="1641" y2="-19" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1689" y1="181" x2="1731" y2="154" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1750" y1="332" x2="1823" y2="317" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<line x1="1755" y1="495" x2="1854" y2="509" stroke="#ff633b" stroke-width="6" stroke-linecap="round" opacity=".3"/>
+<circle cx="110" cy="820" r="5" fill="#ff633b" opacity="0.90"/>
+<circle cx="144" cy="820" r="5" fill="#ff633b" opacity="0.78"/>
+<circle cx="178" cy="820" r="5" fill="#ff633b" opacity="0.66"/>
+<circle cx="212" cy="820" r="5" fill="#ff633b" opacity="0.54"/>
+<circle cx="246" cy="820" r="5" fill="#ff633b" opacity="0.42"/>
+<circle cx="280" cy="820" r="5" fill="#ff633b" opacity="0.30"/>
+<ellipse cx="1290" cy="730" rx="460" ry="38" fill="#000" opacity=".28" filter="url(#blur)"/>
+<g transform="translate(1290 430) rotate(-5) scale(1.35)" stroke-linejoin="round" stroke-linecap="round">
+<g transform="translate(-185 0) scale(1 1)">
+<path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z" fill="url(#lens)" stroke="#ff633b" stroke-width="18"/>
+<path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z" fill="none" stroke="#ffffff" stroke-width="2" opacity=".25" transform="scale(.9)"/>
+<clipPath id="c40"><path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z"/></clipPath>
+<g clip-path="url(#c40)"><path d="M-170 -130 L-20 -130 L-130 130 L-190 130Z" fill="url(#shine)"/><path d="M10 -130 L50 -130 L-60 130 L-100 130Z" fill="#ffffff" opacity=".18"/></g>
+<path d="M-150 -85 L-260 -113" stroke="#ff633b" stroke-width="18" fill="none"/>
+</g>
+<g transform="translate(185 0) scale(-1 1)">
+<path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z" fill="url(#lens)" stroke="#ff633b" stroke-width="18"/>
+<path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z" fill="none" stroke="#ffffff" stroke-width="2" opacity=".25" transform="scale(.9)"/>
+<clipPath id="c41"><path d="M-165 -115 Q-120 -105 -80 -82 L120 -62 Q165 -40 150 30 Q120 105 30 100 L-60 92 Q-150 62 -157 -30Z"/></clipPath>
+<g clip-path="url(#c41)"><path d="M-170 -130 L-20 -130 L-130 130 L-190 130Z" fill="url(#shine)"/><path d="M10 -130 L50 -130 L-60 130 L-100 130Z" fill="#ffffff" opacity=".18"/></g>
+<path d="M-150 -85 L-260 -113" stroke="#ff633b" stroke-width="18" fill="none"/>
+</g>
+<path d="M-25 -60 Q0 -90 25 -60" fill="none" stroke="#ff633b" stroke-width="18"/>
+</g>
+<path d="M770 96 Q770 130 804 130 Q770 130 770 164 Q770 130 736 130 Q770 130 770 96Z" fill="#ff633b"/>
+<path d="M1850 644 Q1850 670 1876 670 Q1850 670 1850 696 Q1850 670 1824 670 Q1850 670 1850 644Z" fill="#ff633b"/>
+<path d="M1730 82 Q1730 100 1748 100 Q1730 100 1730 118 Q1730 100 1712 100 Q1730 100 1730 82Z" fill="#ff633b"/>
+<text x="1800" y="850" text-anchor="end" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="6" fill="#151511" opacity=".75">SUNPOP  ·  UV400 PROTECTION</text>
+</svg>
