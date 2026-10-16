@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sunglasses_bd
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - sunglasses_pgdata:/var/lib/postgresql/data
+  # Optional: run the whole stack with `docker compose --profile app up -d --build`
+  app:
+    profiles: ["app"]
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/sunglasses_bd
+    depends_on: [db]
+    ports:
+      - "3000:3000"
+    volumes:
+      - sunpop_uploads:/app/uploads
+volumes:
+  sunglasses_pgdata:
+  sunpop_uploads:

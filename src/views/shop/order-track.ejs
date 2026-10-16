@@ -1,0 +1,7 @@
+<%- include('../partials/header',{title}) %>
+<section class="page-hero compact-hero"><p class="eyebrow">ORDER LOOKUP</p><h1>Track your <em>order.</em></h1><p>আপনার অর্ডার নম্বর ও অর্ডারের সময় ব্যবহৃত মোবাইল নম্বর দিন।</p></section>
+<section class="section-pad narrow-content">
+ <% if(error){%><div class="form-error"><%= error %></div><%}%>
+ <% if(!order){%><form method="post" action="/order/<%= encodeURIComponent(orderNumber) %>/track" class="checkout-form"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><label>Order number<input name="order_number_display" value="<%= orderNumber %>" readonly></label><label>Mobile number<input name="phone" required pattern="01[3-9][0-9]{8}" maxlength="11" placeholder="01XXXXXXXXX"></label><button class="button button-dark" type="submit">Find my order ↗</button></form><%}else{%>
+ <div class="success-panel"><p class="eyebrow">ORDER STATUS</p><h2><em><%= order.order_number %></em></h2><div class="status-grid"><div><small>Customer</small><strong><%= order.customer_name %></strong></div><div><small>Order status</small><strong><%= order.order_status %></strong></div><div><small>Payment</small><strong><%= order.payment_status %> · <%= order.payment_method %></strong></div><div><small>Total</small><strong><%= money(order.total_paisa) %></strong></div></div><p class="muted">Order date: <%= new Date(order.created_at).toLocaleString('en-BD') %></p></div><%}%>
+</section><%- include('../partials/footer') %>
