@@ -36,6 +36,15 @@ app.use(express.urlencoded({ extended: true, limit: '30kb' }));
 app.use(express.json({ limit: '30kb' }));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: isProd ? '7d' : 0 }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads'), { maxAge: isProd ? '30d' : 0, immutable: isProd, index: false, dotfiles: 'deny' }));
+app.get('/uploads/:name', async (req, res, next) => {
+  try {
+    if (!/^[a-f0-9]{32}\.(png|jpg|webp|gif)$/.test(req.params.name)) return next();
+    const r = await pool.query('SELECT mime,data FROM uploaded_files WHERE name=$1', [req.params.name]);
+    if (!r.rowCount) return next();
+    res.set({ 'Content-Type': r.rows[0].mime, 'Cache-Control': 'public, max-age=2592000, immutable', 'X-Content-Type-Options': 'nosniff' });
+    res.send(r.rows[0].data);
+  } catch (e) { next(e); }
+});
 
 if (isProd && (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32 || /replace-with/i.test(process.env.SESSION_SECRET)))
   throw new Error('SESSION_SECRET must be set to a random value of at least 32 characters in production');

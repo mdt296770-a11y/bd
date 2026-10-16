@@ -52,3 +52,7 @@ CREATE INDEX IF NOT EXISTS customers_phone_idx ON customers(phone);
 CREATE INDEX IF NOT EXISTS orders_phone_idx ON orders(phone);
 CREATE INDEX IF NOT EXISTS orders_status_idx ON orders(order_status, payment_status);
 CREATE INDEX IF NOT EXISTS order_items_order_idx ON order_items(order_id);
+
+CREATE TABLE IF NOT EXISTS uploaded_files (
+ name TEXT PRIMARY KEY, mime TEXT NOT NULL, data BYTEA NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
