@@ -15,3 +15,59 @@ main:focus{outline:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
 .muted{color:#5f5f56}.product-category{color:#5f5f56}.footer p,.footer a:not(.brand),.footer span{color:#55554d}
 @media(max-width:640px){.button,.filter-bar select,.filter-bar .button{min-height:46px}.main-nav a{padding:6px 0}}
+
+/* ---- 3D layer (scene3d.js) ---- */
+[hidden]{display:none!important}
+.fx3d-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:3;pointer-events:none;display:block}
+.fx-toggle{height:30px;min-width:44px;padding:0 10px;border:1px solid var(--ink);border-radius:999px;background:var(--acid);color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.08em;box-shadow:0 3px 0 rgba(21,21,17,.3);transition:transform .15s,box-shadow .15s,background .15s}
+.fx-toggle:hover{transform:translateY(-1px)}
+.fx-toggle:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(21,21,17,.3)}
+.fx-toggle.off{background:transparent;color:var(--muted);border-color:var(--line);box-shadow:none;text-decoration:line-through}
+
+/* extruded buttons and headings */
+.button{box-shadow:0 4px 0 rgba(21,21,17,.28);transition:transform .15s,box-shadow .15s,background .2s}
+.button:hover{box-shadow:0 6px 0 rgba(21,21,17,.28)}
+.button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(21,21,17,.28)}
+.button-disabled,.button-disabled:hover{box-shadow:none;transform:none}
+.page-hero h1,.section-heading h2,.detail-copy h1{text-shadow:1px 1px 0 rgba(21,21,17,.14),2px 2px 0 rgba(21,21,17,.12),3px 3px 0 rgba(21,21,17,.1),5px 7px 10px rgba(21,21,17,.14)}
+.hero-copy h1{text-shadow:1px 1px 0 rgba(0,0,0,.28),2px 2px 0 rgba(0,0,0,.24),3px 3px 0 rgba(0,0,0,.2),6px 10px 18px rgba(0,0,0,.35)}
+.manifesto h2{text-shadow:1px 1px 0 rgba(216,255,62,.28),2px 2px 0 rgba(216,255,62,.2),4px 6px 14px rgba(0,0,0,.5)}
+
+/* logo flips in 3D, manifesto badge spins */
+.brand{perspective:400px}
+.brand-mark{box-shadow:3px 3px 0 var(--acid),3px 3px 0 1px var(--ink);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.brand:hover .brand-mark{transform:rotate(-7deg) rotateY(360deg)}
+.manifesto{perspective:900px}
+.manifesto-shape{transform-style:preserve-3d;animation:sun-flip 9s ease-in-out infinite;text-shadow:2px 2px 0 rgba(255,99,59,.6),4px 4px 0 rgba(255,99,59,.35),7px 9px 16px rgba(0,0,0,.5)}
+@keyframes sun-flip{0%,100%{transform:rotate(8deg) rotateY(-28deg) rotateX(6deg)}50%{transform:rotate(8deg) rotateY(28deg) rotateX(-6deg)}}
+.ticker div{text-shadow:1px 1px 0 rgba(21,21,17,.15)}
+
+/* pointer tilt with glare */
+.tilt3d{position:relative;transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out,box-shadow .3s;will-change:transform}
+.tilt3d:hover{box-shadow:0 26px 40px -20px rgba(21,21,17,.4)}
+.tilt3d::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.55),rgba(255,255,255,0) 55%)}
+.tilt3d:hover::after{opacity:.65}
+.benefit-row>div.tilt3d{padding:10px;margin:-10px}
+
+/* scroll reveal in 3D */
+.reveal3d{opacity:0;transform:perspective(900px) translateY(38px) rotateX(12deg);transform-origin:50% 100%;transition:opacity .8s ease var(--d,0ms),transform .9s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}
+.reveal3d.in3d{opacity:1;transform:none}
+
+/* product 3D viewer */
+.viewer3d-btn{position:absolute;top:12px;right:12px;z-index:3;min-height:36px;padding:0 14px;border:1px solid var(--ink);background:var(--ink);color:var(--acid);font-size:11px;font-weight:700;letter-spacing:.06em;box-shadow:0 4px 0 rgba(21,21,17,.3);transition:transform .15s,box-shadow .15s}
+.viewer3d-btn:hover{transform:translateY(-2px)}
+.viewer3d-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(21,21,17,.3)}
+.viewer3d{position:absolute;inset:0;z-index:8;background:radial-gradient(circle at 50% 38%,#fff 0,#eceae0 55%,#d9d6c8 100%)}
+.viewer3d-stage{position:absolute;inset:0;cursor:grab;touch-action:pan-y;outline-offset:-4px}
+.viewer3d-stage:active{cursor:grabbing}
+.viewer3d-stage canvas{width:100%;height:100%;display:block}
+.viewer3d-close{position:absolute;top:12px;right:12px;width:38px;height:38px;border:1px solid var(--ink);background:var(--paper);border-radius:50%;font-size:15px;z-index:2}
+.viewer3d-hint{position:absolute;left:0;right:0;bottom:62px;margin:0;text-align:center;font-size:11px;color:#55554d;pointer-events:none}
+.viewer3d-swatches{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:10px}
+.swatch{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--ink),0 3px 0 rgba(21,21,17,.25);padding:0}
+.swatch.on{box-shadow:0 0 0 3px var(--orange),0 3px 0 rgba(21,21,17,.25)}
+@media(max-width:640px){.fx3d-canvas{opacity:.92}.fx-toggle{height:28px;min-width:40px;padding:0 8px}.header-actions{gap:8px}.viewer3d-btn{top:8px;right:8px}}
+@media(prefers-reduced-motion:reduce){.reveal3d{opacity:1;transform:none}.tilt3d{transition:none}}
+/* header and announcement bar sit above the 3D canvas so floating glasses pass behind them */
+.announcement,.site-header{position:relative;z-index:5}
+.site-header{background:var(--paper)}

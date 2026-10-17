@@ -46,5 +46,11 @@ Schedule `backup.sh` with cron and copy backups off the server. Practise a resto
 ## Docker
 `docker compose --profile app up -d --build` runs the app and database. For production use a managed PostgreSQL or protect the DB port, set `NODE_ENV=production`, and put HTTPS (Nginx/Caddy/Cloudflare) in front.
 
+## 3D layer
+Floating 3D sunglasses and invented, sunglasses-wearing characters drift through the background, the hero has a spinning pair, product pages have a draggable 3D viewer, and cards tilt on hover. Everything is procedural (three.js, no model files) and served from `/js/scene3d.js`, so the CSP stays `script-src 'self'`.
+- Source lives in `src/client/`; after editing run `npm run build:3d` and commit the regenerated `src/public/js/scene3d.js` (Docker does not build it).
+- Visitors can switch it off with the **3D** button in the header (remembered in `localStorage`). It also switches itself off on slow devices and respects `prefers-reduced-motion`.
+- Open any page with `?fx3d=full` to disable the automatic quality downgrade while debugging.
+
 ## Project status
 See `PROJECT_STATUS_BN.md` (Bangla): what was verified, what changed, and what remains before launch.
