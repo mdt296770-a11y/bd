@@ -1,5 +1,5 @@
 // SUNPOP 3D layer: floating 3D sunglasses + visiting characters in the background,
-// a spinning hero pair, a rotatable viewer on product pages, plus CSS-3D card effects.
+// a 3D cover-flow banner carousel, a rotatable viewer on product pages, plus CSS-3D card effects.
 // Bundled with three.js by `npm run build:3d` into src/public/js/scene3d.js (served from 'self', CSP-safe).
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -87,11 +87,6 @@ function initBackground(onGiveUp) {
   const maxFloaters = mobile ? 6 : lowEnd ? 7 : 14;
   for (let i = 0; i < maxFloaters; i++) floaters.push(makeFloater(i));
 
-  // hero feature pair: big, anchored over the hero banner
-  const hero = makeFloater(1);
-  hero.big = true; hero.f = 1; hero.depth = 120; hero.glasses.userData.materials.lensMat.opacity = 0.7;
-  hero.holder.visible = false;
-  floaters.push(hero);
 
   // ----- visiting characters -----
   const CYCLE = 20;
@@ -120,22 +115,18 @@ function initBackground(onGiveUp) {
     camera.updateProjectionMatrix();
 
     const margin = Math.max(36, state.W * (mobile ? 0.1 : 0.115));
-    const count = clamp(Math.round(state.docH / (mobile ? 700 : 520)), mobile ? 3 : 5, floaters.length - 1);
+    const count = clamp(Math.round(state.docH / (mobile ? 700 : 520)), mobile ? 3 : 5, floaters.length);
+    // keep the banner carousel at the top of the page clear: floating glasses start below it
+    const heroEl = document.querySelector('.hero-carousel');
+    const clearY = heroEl ? heroEl.getBoundingClientRect().bottom + window.scrollY + 30 : 0;
     floaters.forEach((f, idx) => {
       if (f.big) return;
       f.holder.visible = idx < count && !(state.quality && idx >= Math.ceil(count / 2));
       f.size = (mobile ? 70 : 100) + f.rx * (mobile ? 40 : 110);
       f.x = f.side < 0 ? margin * (0.1 + f.rx * 0.9) : state.W - margin * (0.1 + f.rx * 0.9);
       f.docY = f.ry * (f.f * (state.docH - state.H) + state.H);
+      if (clearY) f.docY = Math.max(f.docY, clearY + f.ry * 380);
     });
-    const heroEl = document.querySelector('.hero-carousel');
-    if (heroEl) {
-      const r = heroEl.getBoundingClientRect();
-      hero.holder.visible = true;
-      hero.size = mobile ? Math.min(state.W * 0.4, 160) : Math.min(r.width * 0.2, 280);
-      hero.x = mobile ? r.left + r.width * 0.8 : r.left + r.width * 0.9;
-      hero.docY = r.top + window.scrollY + r.height * (mobile ? 0.16 : 0.24);
-    } else hero.holder.visible = false;
     slots.forEach(s => s.people.forEach(p => { p.userData.sizePx = 0; }));
   }
 
@@ -386,11 +377,57 @@ function initDomFx() {
 }
 
 /* ------------------------------------------------------------------ */
+/* Hero banners as a 3D cover-flow carousel (works on top of site.js)  */
+/* ------------------------------------------------------------------ */
+function initCarousel3d() {
+  const car = document.querySelector('[data-carousel]');
+  if (!car || reduced) return;
+  const slides = [...car.querySelectorAll('[data-slide]')];
+  if (slides.length < 2) return;
+  const n = slides.length;
+  car.classList.add('carousel3d');
+  // site.js owns autoplay and the .active class; we only map "distance from active" onto data-o for CSS.
+  const update = () => {
+    const a = Math.max(0, slides.findIndex(s => s.classList.contains('active')));
+    slides.forEach((s, i) => {
+      let d = ((i - a) % n + n) % n;
+      if (d > n / 2) d -= n;
+      const o = Math.abs(d) > 2 ? Math.sign(d) * 3 : d;
+      s.dataset.o = String(o);
+      s.setAttribute('aria-hidden', o === 0 ? 'false' : 'true');
+      s.querySelectorAll('a').forEach(l => l.setAttribute('tabindex', o === 0 ? '0' : '-1'));
+    });
+  };
+  update();
+  const mo = new MutationObserver(update);
+  slides.forEach(s => mo.observe(s, { attributes: true, attributeFilter: ['class'] }));
+  const goTo = i => car.querySelector(`[data-dot="${i}"]`)?.click();
+  // clicking a side banner brings it to the front instead of following its link
+  slides.forEach((s, i) => s.addEventListener('click', e => { if (s.dataset.o !== '0') { e.preventDefault(); goTo(i); } }, true));
+  if (!coarse) {
+    car.addEventListener('pointermove', e => {
+      const r = car.getBoundingClientRect();
+      car.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(2) + 'deg');
+      car.style.setProperty('--rx', ((0.5 - (e.clientY - r.top) / r.height) * 4).toFixed(2) + 'deg');
+    });
+    car.addEventListener('pointerleave', () => { car.style.setProperty('--ry', '0deg'); car.style.setProperty('--rx', '0deg'); });
+  }
+  let x0 = null;
+  car.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  car.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) car.querySelector(dx < 0 ? '[data-next]' : '[data-prev]')?.click();
+  }, { passive: true });
+}
+
+/* ------------------------------------------------------------------ */
 /* Boot                                                                */
 /* ------------------------------------------------------------------ */
 function boot() {
   document.documentElement.classList.add('has-3d');
   initDomFx();
+  initCarousel3d();
   document.querySelectorAll('[data-viewer3d]').forEach(b => b.addEventListener('click', () => openViewer(b)));
 
   const toggles = [...document.querySelectorAll('[data-fx-toggle]')];
