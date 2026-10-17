@@ -21,7 +21,7 @@ Create the test database once: `docker compose exec db createdb -U postgres sung
 | `SESSION_SECRET` | 32+ random characters (required in production) |
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | first admin created by `db:seed` (change the password!) |
 | `APP_BASE_URL` | public URL, used for payment callbacks, sitemap, canonical links |
-| `TRUST_PROXY` | `1` when behind Nginx/Cloudflare/PaaS |
+| `TRUST_PROXY` | `1` when behind Nginx/Cloudflare/PaaS (on Render it is turned on automatically; without it admin login fails with a CSRF error) |
 | `STORE_PHONE/EMAIL/ADDRESS/WHATSAPP` | shown on the Contact page and footer |
 | `DELIVERY_DHAKA_BDT` / `DELIVERY_OUTSIDE_BDT` | delivery charges in taka |
 | `PENDING_PAYMENT_MINUTES` | unpaid online orders are cancelled and stock released after this time |

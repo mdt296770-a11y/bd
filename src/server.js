@@ -16,7 +16,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.disable('x-powered-by');
 // Behind Nginx/Cloudflare/PaaS set TRUST_PROXY=1 so req.ip, rate limits and secure cookies work.
-if (process.env.TRUST_PROXY) app.set('trust proxy', /^\d+$/.test(process.env.TRUST_PROXY) ? Number(process.env.TRUST_PROXY) : process.env.TRUST_PROXY);
+// Render sets RENDER=true and always puts a proxy in front; without trusting it, secure session cookies are never sent
+// and every admin login fails with "নিরাপত্তা যাচাই ব্যর্থ". An explicit TRUST_PROXY always wins.
+const trustProxy = process.env.TRUST_PROXY || (process.env.RENDER ? '1' : '');
+if (trustProxy) app.set('trust proxy', /^\d+$/.test(trustProxy) ? Number(trustProxy) : trustProxy);
 
 const gatewayHosts = ['https://securepay.sslcommerz.com', 'https://sandbox.sslcommerz.com'];
 app.use(helmet({
@@ -88,7 +91,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/admin/login', rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: true, legacyHeaders: false, message: 'অনেকবার চেষ্টা করা হয়েছে। ১৫ মিনিট পর আবার চেষ্টা করুন।' }));
+// Admin pages must never be cached: a cached login form carries a stale CSRF token.
+app.use('/admin', (req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
+// Only failed sign-in POSTs count; merely opening or refreshing the page must not lock the owner out.
+app.use('/admin/login', rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: true, legacyHeaders: false, skipSuccessfulRequests: true, skip: (req) => req.method !== 'POST', message: 'অনেকবার চেষ্টা করা হয়েছে। ১৫ মিনিট পর আবার চেষ্টা করুন।' }));
 app.use('/order', rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: true, legacyHeaders: false, message: 'অনেকবার চেষ্টা করা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।' }));
 app.use('/checkout', rateLimit({ windowMs: 10 * 60 * 1000, limit: Number(process.env.CHECKOUT_RATE_LIMIT) || 15, standardHeaders: true, legacyHeaders: false }));
 

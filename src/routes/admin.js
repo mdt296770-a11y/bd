@@ -28,7 +28,7 @@ async function deleteUploadIfUnused(url) {
 }
 
 // ---------- auth ----------
-router.get('/login', (req, res) => res.render('admin/login', { title: 'Admin login', error: null }));
+router.get('/login', (req, res) => res.render('admin/login', { title: 'Admin login', error: req.query.retry ? 'সেশনের মেয়াদ শেষ হয়েছিল। আবার ইমেইল ও পাসওয়ার্ড দিয়ে সাইন ইন করুন।' : null }));
 router.post('/login', wrap(async (req, res, next) => {
   const email = String(req.body.email || '').toLowerCase().trim(), password = String(req.body.password || '');
   const r = await pool.query('SELECT id,name,email,password_hash,role FROM admins WHERE email=$1', [email]);

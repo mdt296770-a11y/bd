@@ -16,15 +16,20 @@ function tokenMatches(req) {
   return Boolean(expected) && supplied.length === expected.length &&
     crypto.timingSafeEqual(Buffer.from(supplied), Buffer.from(expected));
 }
-const csrfFail = res => res.status(403).send('নিরাপত্তা যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।');
+const csrfFail = (res, req) => {
+  // Stale/expired login form (a token was sent but no longer matches): send the owner to a fresh form instead of a dead end.
+  // A request with no token at all is still rejected with 403.
+  if (req && req.method === 'POST' && req.originalUrl.split('?')[0] === '/admin/login' && req.body && req.body._csrf) return res.redirect(303, '/admin/login?retry=1');
+  return res.status(403).send('নিরাপত্তা যাচাই ব্যর্থ হয়েছে। পেজটি রিফ্রেশ করে আবার চেষ্টা করুন।');
+};
 function verifyCsrf(req, res, next) {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
   if (req.path.startsWith('/payments/sslcommerz/')) return next(); // server-to-server/gateway callbacks, validated with the gateway API
   const isMultipart = String(req.headers['content-type'] || '').toLowerCase().startsWith('multipart/form-data');
-  if (isMultipart) return MULTIPART_ROUTES.test(req.path) ? next() : csrfFail(res);
-  return tokenMatches(req) ? next() : csrfFail(res);
+  if (isMultipart) return MULTIPART_ROUTES.test(req.path) ? next() : csrfFail(res, req);
+  return tokenMatches(req) ? next() : csrfFail(res, req);
 }
-function verifyCsrfStrict(req, res, next) { return tokenMatches(req) ? next() : csrfFail(res); }
+function verifyCsrfStrict(req, res, next) { return tokenMatches(req) ? next() : csrfFail(res, req); }
 
 function requireAdmin(req, res, next) {
   if (!req.session.admin) return res.redirect('/admin/login');
